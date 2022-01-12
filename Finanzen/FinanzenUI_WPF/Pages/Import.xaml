@@ -1,0 +1,99 @@
+﻿<Page x:Class="FinanzenUI_WPF.Pages.Import"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FinanzenUI_WPF.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" 
+      d:DesignWidth="800"
+      Title="Import"
+      Language="en-DE">
+
+    <Page.Resources>
+        <!--Datagrid Style-->
+        <Style x:Key="DGHeaderStyle" TargetType="{x:Type DataGrid}">
+            <Setter Property="ColumnHeaderStyle" Value="{DynamicResource DGCHeaderStyle}"/>
+        </Style>
+        <Style x:Key="DGCHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Background" Value="#25353F" />
+            <Setter Property="Foreground" Value="white"/>
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </Page.Resources>
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle RadiusX="10"
+                   RadiusY="10"
+                   Fill="#191919"
+                   Grid.RowSpan="2"/>
+
+        <DataGrid x:Name="dgImportBookings"
+                  Margin="10, 10, 10, 0"
+                  ItemsSource="{Binding}"
+                        
+                  BorderBrush="Transparent"                  
+                  Foreground="White" 
+                  ColumnHeaderHeight="40"                  
+                  GridLinesVisibility="None"                     
+                  Background="#333337"  
+                  RowBackground="#333337"
+                  AlternatingRowBackground="#434346"
+                  ColumnWidth="Auto"
+                  VerticalContentAlignment="Center"
+                  HorizontalContentAlignment="Center"
+                  Style="{DynamicResource DGHeaderStyle}" 
+                        
+                  AutoGenerateColumns="False"
+                  ClipboardCopyMode="IncludeHeader" 
+                  IsReadOnly="True">
+
+            <DataGrid.Columns>
+                <!--Datenspalten-->
+                <DataGridTextColumn Header="Datum"
+                                    Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}"
+                                    Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Grid.Row="1"
+                    Margin="10">
+            
+            <CheckBox x:Name="useRules"
+                      Content="Importregeln anwenden"
+                      IsChecked="True"
+                      Foreground="White"/>
+
+            <DockPanel Height="50">
+                <Button x:Name="selectFile"
+                        Content="Datei auswählen"
+                        Margin="0,10,10,10"
+                        Width="200"
+                        DockPanel.Dock="Left"
+                        HorizontalAlignment="Left" Click="selectFile_Click"/>
+                <Button x:Name="importSelected"
+                        Content=" Ausgewählte Einträge importieren"
+                        Margin="0,10,10,10"
+                        Width="200"
+                        DockPanel.Dock="Left"
+                        HorizontalAlignment="Left" Click="importSelected_Click"/>
+                <Button x:Name="updateRules"
+                        Content="Regeln bearbeiten"
+                        Margin="0,10,0,10"
+                        Width="200"
+                        DockPanel.Dock="Right"
+                        HorizontalAlignment="Right" Click="updateRules_Click"/>
+            </DockPanel>
+        </StackPanel>
+        
+    </Grid>
+</Page>

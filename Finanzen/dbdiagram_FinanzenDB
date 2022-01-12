@@ -1,0 +1,211 @@
+//https://dbdiagram.io/d
+
+Table AccountCategories {
+	ID int [pk]
+	Name varchar
+	ParentID varchar
+}
+
+Ref: AccountCategories.ID - AccountCategories.ParentID
+
+
+TABLE Accounts {
+	ID INTEGER  [pk]
+	Name TEXT
+	AccountName TEXT
+	Password TEXT
+	EMail TEXT
+	Website TEXT
+	Notice TEXT
+	CategoryID VARCHAR(5)
+	Icon TEXT(100)
+}
+
+Ref: Accounts.CategoryID < AccountCategories.ID
+
+
+ TABLE BankAccounts {
+ ID INTEGER  [pk]
+ StartDate DATETIME
+ Name TEXT
+ StartBalance CURRENCY
+ UserID VARCHAR(3)
+ IsDefault LOGICAL  
+ Notice TEXT
+ IsActive LOGICAL 
+}
+
+Ref: BankAccounts.UserID < DatabaseUsers.ID
+
+
+ TABLE BookingCategories {
+ ID INTEGER  [pk]
+ Name TEXT(255)
+ ParentID VARCHAR(5)
+}
+
+Ref: BookingCategories.ID - BookingCategories.ParentID
+
+
+ TABLE BookingTemplates {
+ ID INTEGER  [pk]
+ Title TEXT
+ Purpose TEXT
+ Amount CURRENCY
+ Notice TEXT
+ Kind TEXT
+ CategoryName TEXT(255)
+ CategoryID VARCHAR(10)
+ UserID VARCHAR(3)
+ BankAccountID VARCHAR(10)  
+ IsOffsetBooking LOGICAL  
+ OffsetBankAccountID VARCHAR(10)  
+}
+
+Ref: BookingTemplates.CategoryID < BookingCategories.ID
+Ref: BookingTemplates.UserID < DatabaseUsers.ID
+Ref: BookingTemplates.BankAccountID < BankAccounts.ID
+
+
+TABLE Bookings {
+ ID INTEGER   [pk]
+ Date DATETIME
+ Purpose TEXT
+ Amount CURRENCY
+ CategoryName TEXT(255)
+ CategoryID VARCHAR(10)
+ Notice TEXT
+ Kind VARCHAR(10)
+ UserID VARCHAR(3)
+ UniqueID TEXT(255)
+ RegularBookingID VARCHAR(10)  
+ BankAccountID VARCHAR(10)  
+ DocumentID VARCHAR(10)  
+ IsOffsetBooking LOGICAL  
+ IsSplitBooking LOGICAL  
+ OffsetBookingID VARCHAR(10)  
+ OffsetBankAccountID VARCHAR(10)  
+}
+
+Ref: Bookings.CategoryID < BookingCategories.ID
+Ref: Bookings.UserID < DatabaseUsers.ID
+Ref: Bookings.RegularBookingID < RegularBookings.ID
+Ref: Bookings.BankAccountID < BankAccounts.ID
+Ref: Bookings.DocumentID < Documents.ID
+Ref: Bookings.OffsetBookingID < Bookings.ID
+Ref: Bookings.OffsetBankAccountID < BankAccounts.ID
+
+
+TABLE DatabaseInfos {
+ ID INTEGER  [pk]
+ Key TEXT
+ Value TEXT
+}
+
+TABLE DatabaseUsers {
+ ID INTEGER  [pk]
+ Name TEXT
+ Password TEXT
+ Is LOGICAL  
+ HIDeMyData LOGICAL  
+}
+
+TABLE DocumentCategories {
+ ID INTEGER  [pk]
+ Name TEXT(255)
+ ParentID VARCHAR(5)
+}
+
+Ref: DocumentCategories.ParentID - DocumentCategories.ID
+
+
+TABLE DocumentFiles {
+ Content OLEOBJECT
+ DocumentID VARCHAR(10)  
+}
+
+Ref: DocumentFiles.DocumentID < Documents.ID
+
+
+TABLE Documents {
+ ID INTEGER  [pk]
+ Length LONG
+ FileName TEXT
+ FileType TEXT
+ CreatedOn DATETIME
+ Notice TEXT
+ Content OLEOBJECT
+ CategoryID VARCHAR(5)
+ Name TEXT(255)
+ IsFileShortcut LOGICAL  
+}
+
+Ref: Documents.CategoryID < DocumentCategories.ID
+
+
+TABLE RegularBookingBookings {
+ BookingID VARCHAR(10)  
+ RegularBookingID VARCHAR(10)  
+ TargetDate DATETIME
+ BookingHasBeenDeleted LOGICAL  
+}
+
+Ref: RegularBookingBookings.BookingID < Bookings.ID
+Ref: RegularBookingBookings.RegularBookingID < RegularBookings.ID
+
+
+TABLE RegularBookings {
+ ID INTEGER  [pk]
+ Purpose TEXT
+ Amount CURRENCY
+ Kind VARCHAR(10)
+ Notice TEXT
+ CategoryName TEXT(255)
+ CategoryID VARCHAR(10)
+ UserID VARCHAR(3)
+ ReverseBook LOGICAL  
+ Interval VARCHAR(3)
+ IntervalDate TEXT
+ IsInterval LOGICAL  
+ StartDate DATETIME
+ EndDate DATETIME
+ BankAccountID VARCHAR(10)  
+ DocumentID VARCHAR(10)  
+ IsOpenEnd LOGICAL  
+ IsOffsetBooking LOGICAL  
+ OffsetBankAccountID VARCHAR(10)
+}
+
+Ref: RegularBookings.CategoryID < BookingCategories.ID
+Ref: RegularBookings.UserID < DatabaseUsers.ID
+Ref: RegularBookings.BankAccountID < BankAccounts.ID
+Ref: RegularBookings.DocumentID < Documents.ID
+Ref: RegularBookings.OffsetBankAccountID < BankAccounts.ID
+
+
+TABLE SplitBookingEntries {
+ ID INTEGER  [pk]
+ Purpose TEXT
+ Notice TEXT
+ Amount CURRENCY  
+ CategoryName TEXT(255)
+ CategoryID VARCHAR(10)
+ BookingID VARCHAR(10)
+}
+
+Ref: SplitBookingEntries.CategoryID < BookingCategories.ID
+Ref: SplitBookingEntries.BookingID < Bookings.ID
+
+
+TABLE TokenRelations {
+ TokenID VARCHAR(10)  
+ AssociatedItemID VARCHAR(10)  
+ AssociatedItemType VARCHAR(10)  
+}
+
+Ref: TokenRelations.TokenID < Tokens.ID
+
+TABLE Tokens {
+ ID INTEGER  [pk]
+ Name TEXT
+}

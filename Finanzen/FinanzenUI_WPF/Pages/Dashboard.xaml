@@ -1,0 +1,168 @@
+﻿<Page x:Class="FinanzenUI_WPF.Pages.Dashboard"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:FinanzenUI_WPF.Pages"
+      xmlns:UserControls="clr-namespace:FinanzenUI_WPF.UserControls"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" 
+      d:DesignWidth="800"
+      Title="Dashboard"
+      Language="en-DE">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0,4*"/>
+            <ColumnDefinition Width="0,6*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--Filter-->
+        <Grid Grid.Row="0"
+              Grid.Column="0"
+              Grid.ColumnSpan="2"
+              Margin="0,0,0,5">
+            
+            <Rectangle RadiusX="10"
+                       RadiusY="10"
+                       Fill="#191919"/>
+            <StackPanel x:Name="Filter"
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center">
+
+                <!--Aktualisieren-->
+                <Button x:Name="btnRefresh" 
+                        Margin="10"
+                        Width="40"
+                        Height="40"
+                        Background="Transparent"
+                        BorderBrush="Transparent"
+                        Click="btnRefresh_Click">
+                    <Image Source="/FinanzenUI_WPF;component/icons/refresh.png"/>
+                </Button>
+
+                <Border BorderBrush="White"
+                                BorderThickness="1"
+                                Margin="5"/>
+
+                <!--Monat vor und zurück-->
+                <StackPanel>
+                    <TextBlock Text="Monat"
+                               Foreground="White"
+                               HorizontalAlignment="Center">                        
+                    </TextBlock>
+                    
+                    <StackPanel Orientation="Horizontal">
+                        
+                        <Button x:Name="btnMonthBack" 
+                                Margin="5"
+                                Background="Transparent"
+                                BorderBrush="Transparent"
+                                Click="btnMonthBack_Click">
+                            <Image Source="/FinanzenUI_WPF;component/icons/back.png"/>
+                        </Button>
+                        
+                        <Button x:Name="btnMonthNext" 
+                                Margin="5"
+                                Background="Transparent"
+                                BorderBrush="Transparent" 
+                                Click="btnMonthNext_Click">
+                            <Image Source="/FinanzenUI_WPF;component/icons/next.png"/>
+                        </Button>
+                        
+                    </StackPanel>
+                </StackPanel>
+                
+                <Border BorderBrush="White"
+                                BorderThickness="1"
+                                Margin="5"/>
+
+                <!--Dateblock-->
+                <StackPanel Margin="20,0">
+                    <!--Datum Von-->
+                    <StackPanel Margin="0,3"
+                                Orientation="Horizontal">
+                        <TextBlock Text="Von: "
+                                   Foreground="White"
+                                   Width="30"
+                                   VerticalAlignment="Center"/>
+                        <DatePicker x:Name="datePickerVon"
+                                    BorderBrush="Transparent"
+                                    Width="130"
+                                    SelectedDate="{Binding Path=dateVon}"/>
+                    </StackPanel>
+
+                    <!--Datum Bis-->
+                    <StackPanel Margin="0,3"
+                                Orientation="Horizontal">
+                        <TextBlock Text="Bis: "
+                                   Foreground="White"
+                                   Width="30"
+                                   VerticalAlignment="Center"/>
+                        <DatePicker x:Name="datePickerBis"
+                                    BorderBrush="Transparent"
+                                    Width="130"
+                                    SelectedDate="{Binding Path=dateBis}"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <Border BorderBrush="White"
+                                BorderThickness="1"
+                                Margin="5"/>
+
+                <!--Dropdown Konto-->
+                <StackPanel Margin="20,0">
+                    <TextBlock Text="Konto"
+                               Foreground="White"/>
+                    <ComboBox x:Name="KontoComboBox"
+                              Width="140"
+                              ItemsSource="{Binding Path=BankAccounts}"
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="Name"
+                              IsSynchronizedWithCurrentItem="True"
+                              SelectedIndex="0"/>
+                </StackPanel>
+
+            </StackPanel>
+        </Grid>
+
+        <!--Kontostand-->
+        <Grid Grid.Row="1"
+              Grid.Column="1"
+              Margin="5,5,0,5">
+            <Rectangle RadiusX="10"
+                       RadiusY="10"
+                       Fill="#191919"/>
+            <StackPanel x:Name="Kontostand">
+                <TextBlock Text="Hier könnte Ihre Werbung stehen."
+                           Foreground="white"
+                           FontSize="20"
+                           FontWeight="Bold"
+                           Margin="10"/>
+            </StackPanel>
+        </Grid>
+        
+        <!--Einnahmen verfügbar-->
+        <UserControls:SolidGaugeAvailableMoney x:Name="AvailableMoney"
+                                               Margin="0,5,5,5" 
+                                               Grid.Column="0"
+                                               Grid.Row="1"/>
+
+        <!--Top 5 Kategorien-->
+        <UserControls:PieChartCategories x:Name="TopFive" 
+                                         Margin="0,5,5,0" 
+                                         Grid.Column="0"
+                                         Grid.Row="2"/>
+        
+        <!--Vermögensentwicklung über 12 Monate-->
+        <UserControls:BankAccountDevelopment x:Name="BankAccountDev" 
+                                         Margin="5,5,0,0" 
+                                         Grid.Column="1"
+                                         Grid.Row="2"/>
+    </Grid>
+</Page>

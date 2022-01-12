@@ -1,0 +1,208 @@
+﻿<Window x:Class="FinanzenUI_WPF.Windows.BookingWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FinanzenUI_WPF.Windows"
+        mc:Ignorable="d"
+        Title="Buchung" 
+        Height="600" 
+        Width="600"
+        Background="#191919"
+        WindowStyle="ToolWindow"
+        Topmost="True">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!--UniqueID-->
+        <TextBlock x:Name="txtUniqueId"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   Margin="10"
+                   HorizontalAlignment="Right"                   
+                   Foreground="White"
+                   FontSize="12"
+                   Text="{Binding Path=booking.ID}"/>
+
+        <Border BorderBrush="White"
+                BorderThickness="1"
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Margin="5"/>
+
+        <!--Verwendungszweck-->
+        <StackPanel Margin="10"
+                    Grid.Row="1">            
+            <TextBlock Text="Verwendungszweck"
+                       Foreground="White"
+                       FontSize="14"/>
+            
+            <TextBox Margin="0,10"
+                     AcceptsReturn="True"
+                     TextWrapping="Wrap"
+                     Text="{Binding Path=booking.Purpose}"/>
+            
+            <CheckBox x:Name="chbEinnahme"
+                      Content="als Einnahme buchen"
+                      Foreground="White"
+                      FontSize="14"
+                      IsChecked="{Binding Path=booking.IsIncome}"/>
+        </StackPanel>
+
+
+        <Border BorderBrush="White"
+                BorderThickness="1"
+                Grid.Row="2"
+                Grid.ColumnSpan="2"
+                Margin="5"/>
+
+        <!--Buchungsdaten-->
+        <StackPanel Margin="10"
+                    Grid.Row="2">
+            
+            <!--Kontoauswahl-->
+            <StackPanel Orientation="Horizontal">
+
+                <StackPanel Margin="0,0,5,0">
+                    <TextBlock Text="Konto"
+                               Foreground="White"
+                               FontSize="14"
+                               Margin="0,0,0,10"/>
+                    <ComboBox x:Name="cboBankAccount"
+                              Width="185"
+                              ItemsSource="{Binding Path=BankAccounts}"
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="Name"
+                              IsSynchronizedWithCurrentItem="True"
+                              SelectedIndex="0"/>                    
+                </StackPanel>
+
+                <StackPanel Margin="0,0,5,0">
+                    <TextBlock x:Name="txtOffsetBankAccount" 
+                               Text="Gegenkonto"
+                               Foreground="White"
+                               FontSize="14"
+                               Margin="0,0,0,10"/>
+                    <ComboBox x:Name="cboOffsetBankAccount"
+                              Width="185"
+                              ItemsSource="{Binding Path=OffsetBankAccounts}"
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="Name"
+                              IsSynchronizedWithCurrentItem="True"
+                              SelectedIndex="0"
+                              IsEnabled="False"/>
+                </StackPanel>
+                
+            </StackPanel>
+
+            <!--Kategorie und Betrag-->
+            <StackPanel Orientation="Horizontal"
+                        Margin="0,10">
+
+                <StackPanel Margin="0,0,5,0">
+                    <TextBlock Text="Kategorie"
+                               Foreground="White"
+                               FontSize="14"
+                               Margin="0,0,0,10"/>
+                    <!--Kategorie anpassen-->
+                    <ComboBox x:Name="cboCategory"
+                              Width="220"
+                              ItemsSource="{Binding Path=BookingCategories}"
+                              DisplayMemberPath="Name"
+                              SelectedValuePath="Name"
+                              IsSynchronizedWithCurrentItem="True"
+                              SelectedIndex="0"/>
+                </StackPanel>
+
+                <StackPanel Margin="10,0,5,0">
+                    <TextBlock Text="Betrag"
+                               Foreground="White"
+                               FontSize="14"
+                               Margin="0,0,0,10"/>
+                    <TextBox x:Name="txtAmount"
+                             Text="{Binding Path=booking.Amount, StringFormat={}{0:#.0,0}}"
+                             Width="140"/>
+                    
+                </StackPanel>
+
+            </StackPanel>
+
+            <!--Buchungsdatum-->
+            <TextBlock  Text="Buchungsdatum"
+                        Foreground="White"
+                        FontSize="14"
+                        Margin="0,0,0,10"/>
+            <DatePicker x:Name="dpDate"
+                        SelectedDate="{Binding Path=booking.Date}"
+                        Width="130"
+                        HorizontalAlignment="Left"/>
+        </StackPanel>
+        
+        <!--Checkboxes-->
+        <StackPanel Margin="10"
+                    Grid.Row="2"
+                    Grid.Column="2">
+            <CheckBox x:Name="chbOffsetBooking"
+                      Content="Umbuchung"
+                      Foreground="White"
+                      Margin="10,20,0,5" 
+                      IsChecked="{Binding Path=booking.IsOffsetBookin}"
+                      Checked="cboOffsetBooking_Checked" 
+                      Unchecked="cboOffsetBooking_Unchecked"/>
+           
+            <CheckBox x:Name="chbSplitBooking"
+                      Content="Splittbuchung"
+                      Foreground="White"
+                      Margin="10,5"
+                      IsEnabled="False"/>
+            
+            <CheckBox x:Name="chbTemplateBooking"
+                      Content="als Vorlage speichern"
+                      Foreground="White"
+                      Margin="10,5"
+                      IsEnabled="False"/>
+        </StackPanel>
+
+        <!--Notiz-->
+        <DockPanel Grid.Row="3"
+                   Grid.ColumnSpan="2"
+                   Margin="10">
+            <TextBlock  Text="Notiz"
+                        Foreground="White"
+                        FontSize="14"
+                        Margin="0,0,0,10"
+                        DockPanel.Dock="Top"/>
+            <TextBox x:Name="txtNotice" 
+                     Text="{Binding Path=booking.Notice}"
+                     TextWrapping="Wrap"
+                     AcceptsReturn="True"
+                     VerticalScrollBarVisibility="Visible"/>
+        </DockPanel>
+
+        <!--Butons-->
+        <DockPanel Grid.Row="4"
+                   Grid.Column="1">
+            <Button x:Name="btnExit"
+                    Content="Abbrechen"
+                    Margin="0,5,5,10"
+                    Width="85"
+                    DockPanel.Dock="Right" Click="btnExit_Click"/>
+            <Button x:Name="btnSave"
+                    Content="Speichern"
+                    Margin="0,5,5,10"
+                    Width="85"
+                    DockPanel.Dock="Right" Click="btnSave_Click"/>
+        </DockPanel>
+    </Grid>
+</Window>
