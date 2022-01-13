@@ -30,5 +30,10 @@ Für das UI wird WPF genutzt. Dadurch ist die Anwendung grundsätzlich auf Bilds
 Hier wird die gesamte Logik der Anwendung entwickelt. Außerdem werden alle Nugets, sofern nicht anders möglich, in dieser Library installiert und genutzt.
 
 
+## Beispiele
+![Startseite](https://github.com/SchuetteS/Haushaltsbuch/tree/main/Images/Startseite.png)
+
+![Buchungen](https://github.com/SchuetteS/Haushaltsbuch/tree/main/Images/Buchungen.png)
+
 ## License
 [Apache-2.0 License](http://www.apache.org/licenses/)
