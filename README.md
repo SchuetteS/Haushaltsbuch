@@ -31,9 +31,9 @@ Hier wird die gesamte Logik der Anwendung entwickelt. Außerdem werden alle Nuge
 
 
 ## Beispiele
-![Startseite](Images/Startseite.png)
+![Startseite](/Images/Startseite.png)
 
-![Buchungen](https://github.com/SchuetteS/Haushaltsbuch/tree/main/Images/Buchungen.png)
+![Buchungen](/Images/Buchungen.png)
 
 ## License
 [Apache-2.0 License](http://www.apache.org/licenses/)
