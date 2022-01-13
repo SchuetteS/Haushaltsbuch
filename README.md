@@ -31,7 +31,7 @@ Hier wird die gesamte Logik der Anwendung entwickelt. Außerdem werden alle Nuge
 
 
 ## Beispiele
-![Startseite](https://github.com/SchuetteS/Haushaltsbuch/tree/main/Images/Startseite.png)
+![Startseite](Images/Startseite.png)
 
 ![Buchungen](https://github.com/SchuetteS/Haushaltsbuch/tree/main/Images/Buchungen.png)
 
